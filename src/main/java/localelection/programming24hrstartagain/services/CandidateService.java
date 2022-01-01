@@ -43,11 +43,4 @@ public class CandidateService {
         return candidateRepository.save(candidate);
     }
 
-    public Candidate editCandidate(Candidate candidate) {
-        candidate.setName(candidate.getName());
-        candidate.setSurname(candidate.getSurname());
-        return candidateRepository.save(candidate);
-    }
-
-
 }
