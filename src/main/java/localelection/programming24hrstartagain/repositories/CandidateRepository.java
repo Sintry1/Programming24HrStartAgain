@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     List<Candidate> findCandidateByPartyId(Long partyId);
-    Candidate findCandidateById(Long candidateId);
 }

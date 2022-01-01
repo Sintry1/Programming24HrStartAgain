@@ -30,6 +30,11 @@ public class CandidateController {
         return candidateService.save(candidate);
     }
 
+    @GetMapping("/{candidateId}")
+    public Candidate getCandidateById(@PathVariable Long candidateId){
+        return candidateService.findById(candidateId);
+    }
+
     // Add candidate to a given party
 
     // WORKING
@@ -44,24 +49,37 @@ public class CandidateController {
         return party;
     }
 
-//    // Edit candidates for a given party
-//
-//    // Not working as intended. Currently edits candidates, but removes them from their party.
-//    @PutMapping("/edit/{candidateId}")
-//    public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
-//        candidate = candidateService.findById(candidateId);
-//        Party party = candidate.getParty();
-//        return candidateService.editCandidate(candidate);
-//    }
-
     // Edit candidates for a given party
 
     // Not working as intended. Currently edits candidates, but removes them from their party.
     @PutMapping("/edit/{candidateId}")
     public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
         candidate.setId(candidateId);
-        return candidateService.editCandidate(candidate);
+        candidate.setName(candidate.getName());
+        candidate.setSurname(candidate.getSurname());
+        return candidateService.save(candidate);
     }
+
+    @PutMapping("/edit/{candidateId}/{partyId}")
+    public Candidate editCandidateInParty(@PathVariable Long candidateId, @PathVariable Long partyId, @RequestBody Candidate candidate) {
+        Party party = partyService.findById(partyId);
+
+        candidate.setId(candidateId);
+        candidate.setName(candidate.getName());
+        candidate.setSurname(candidate.getSurname());
+        candidate.setParty(party);
+
+        return candidateService.save(candidate);
+    }
+
+//    // Edit candidates for a given party
+
+//    // Not working as intended. Currently edits candidates, but removes them from their party.
+//    @PutMapping("/edit/{candidateId}")
+//    public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
+//        candidate = candidateService.findById(candidateId);
+//        return candidateService.editCandidate(candidate);
+//    }
 
     // Remove candidate from a party without deleting them
 
