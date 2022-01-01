@@ -44,10 +44,22 @@ public class CandidateController {
         return party;
     }
 
+//    // Edit candidates for a given party
+//
+//    // Not working as intended. Currently edits candidates, but removes them from their party.
+//    @PutMapping("/edit/{candidateId}")
+//    public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
+//        candidate = candidateService.findById(candidateId);
+//        Party party = candidate.getParty();
+//        return candidateService.editCandidate(candidate);
+//    }
+
     // Edit candidates for a given party
+
+    // Not working as intended. Currently edits candidates, but removes them from their party.
     @PutMapping("/edit/{candidateId}")
     public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
-        candidate = candidateService.findById(candidateId);
+        candidate.setId(candidateId);
         return candidateService.editCandidate(candidate);
     }
 
@@ -73,7 +85,7 @@ public class CandidateController {
     // WORKING AS INTENDED
     // Will delete a candidate if Party == null. If it != null, it will remove candidate from party
     // and then it will delete the candidate. Prevents deletion of party when deleting candidate
-    // which was a problem I was facing.[
+    // which was a problem I was facing.
     @Transactional
     @DeleteMapping("/delete/{candidateId}")
     public void deleteCandidate(@PathVariable Long candidateId) {

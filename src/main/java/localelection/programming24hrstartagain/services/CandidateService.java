@@ -44,6 +44,7 @@ public class CandidateService {
     }
 
     public Candidate editCandidate(Candidate candidate) {
+        //candidate.setId(candidate.getId());
         candidate.setName(candidate.getName());
         candidate.setSurname(candidate.getSurname());
         candidate.setParty(candidate.getParty());
