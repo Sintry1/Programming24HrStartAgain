@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/candidates")
 public class CandidateController {
@@ -51,7 +51,7 @@ public class CandidateController {
 
     // Edit candidates for a given party
 
-    // Not working as intended. Currently edits candidates, but removes them from their party.
+    // Working, but not as intended. Currently edits candidates, but removes them from their party.
     @PutMapping("/edit/{candidateId}")
     public Candidate editCandidate(@PathVariable Long candidateId, @RequestBody Candidate candidate) {
         candidate.setId(candidateId);
@@ -86,7 +86,7 @@ public class CandidateController {
     // Working
     @Transactional
     @PutMapping("/remove/{candidateId}/{partyId}")
-    public Party removeCandidate(@PathVariable Long partyId, @PathVariable Long candidateId) {
+    public Party removeCandidateFromParty(@PathVariable Long partyId, @PathVariable Long candidateId) {
         Party party = partyService.findById(partyId);
         Candidate candidate = candidateService.findById(candidateId);
 
@@ -108,7 +108,7 @@ public class CandidateController {
     @DeleteMapping("/delete/{candidateId}")
     public void deleteCandidate(@PathVariable Long candidateId) {
         if (candidateService.findById(candidateId).getParty()!= null){
-            removeCandidate(candidateService.findById(candidateId).getParty().getId(), candidateId);
+            removeCandidateFromParty(candidateService.findById(candidateId).getParty().getId(), candidateId);
         }
         candidateService.deleteCandidate(candidateId);
     }
